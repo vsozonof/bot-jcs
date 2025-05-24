@@ -1,19 +1,54 @@
 //Insert your ApiKey here
-const apiKey = "";
+const apiKey = "RGAPI-f2a7352f-ffbe-49f2-850c-50522184babb";
 
 const button = document.querySelector(".buttonxdd");
-const buttonQueueData = document.querySelector(".button-queue");
+const inputDiv = document.querySelector("input");
 
 
 // List of all of the players to be integrated
-const summonerList = [{name: "siweth", tag:"owo"}, {name:"zboubax", tag:"euw"}, {name:"Shunsui Kyôraku", tag:"SLF"}];
-
 const timer = ms => new Promise(res => setTimeout(res, ms));
 
 let singularSummData = {};
 let summonerData = [];
 let singularQueueDataSummoner = [];
 let queueDataSummoner = [];
+
+
+function fileHandling(div) {
+
+    //Promise to handle file processing otherwise I can't return the content of the JSON
+    return new Promise((resolve, reject) => {
+
+        let file = div.files[0];
+
+
+        if (!file) {
+            reject(new Error("No file were inserted"));
+            return;
+        }
+
+        let reader  = new FileReader();
+        
+
+            reader.onload = function() {
+                // So I think the use of this try catch is incase there is any parsing Error
+                try {
+                    resolve(JSON.parse(reader.result))
+                } catch (error) {
+                    throw error
+                }
+            }
+            
+        // and this one is for when reading the JSON Itself
+        reader.onerror = function() {
+            throw reader.error;
+        }
+        
+        reader.readAsText(file);    
+    })
+
+}
+
 
 
 async function fetchRiotAPI(url) {
@@ -35,7 +70,7 @@ async function fetchRiotAPI(url) {
 }
 
 //String constructor to send to the API in order to get the profile data of each player
-function constructStringQueueData(sumData) {
+function constructProfileDataString(sumData) {
 
     let arr = [];
 
@@ -48,7 +83,7 @@ function constructStringQueueData(sumData) {
 }
 
 //String constructor to send to the API in order to get the puuid of the players, needed in order to re-fetch for the profile data
-function constructSumonnerDataString(object) {
+function constructPUUIDString(object) {
     let arr = [];
 
     for (let i = 0; i < object.length; i++) {
@@ -58,9 +93,11 @@ function constructSumonnerDataString(object) {
     return arr;
 }
 
+async function getProfileDataforEachPlayer() {
 
-button.addEventListener("click", async function() {
-    let constructedString = constructSumonnerDataString(summonerList);
+    const summonerList = await fileHandling(inputDiv);
+
+    let constructedString = constructPUUIDString(summonerList);
 
     //Sending API request for each player (puuid)
     for (let i = 0; i < summonerList.length; i++) {
@@ -70,19 +107,37 @@ button.addEventListener("click", async function() {
     }
 
     console.log(summonerData);
-
-})
-
-buttonQueueData.addEventListener("click", async function() {
-    constructedString = constructStringQueueData(summonerData)
+    
+    constructedString = constructProfileDataString(summonerData)
 
     //Sending API request for each player (profile data)
-    for (let i = 0; i < summonerList.length; i++) {
+    for (let i = 0; i < constructedString.length; i++) {
         singularQueueDataSummoner = await fetchRiotAPI(constructedString[i]);
         queueDataSummoner.push(singularQueueDataSummoner[0]);
         await timer(200);
     }
     console.log(queueDataSummoner);
+
+    return queueDataSummoner;
+
+}
+
+
+button.addEventListener("click", async function() {
+
+    //Prob add loading animations or smth
+
+    try {
+
+        const data = await getProfileDataforEachPlayer();
+
+        console.log(data);
+
+    } catch (error) {
+
+        // add Error handling for the user, a popup or a message
+        console.log(error);
+        return null;
+    }
+
 })
-
-
