@@ -31,4 +31,3 @@ Later features?:
 - Showing the lowest and highest elo among teams and overall.  
 - Maybe integrate all these into a Discord bot?  
 
-

@@ -1,0 +1,28 @@
+{
+  "name": "soloq_challenge",
+  "version": "1.0.0",
+  "description": "soloq challenge bot",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vsozonof/bot-jcs.git"
+  },
+  "keywords": [
+    "bot",
+    "js",
+    "jcs"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vsozonof/bot-jcs/issues"
+  },
+  "homepage": "https://github.com/vsozonof/bot-jcs#readme",
+  "dependencies": {
+    "cron": "^4.3.0",
+    "discord.js": "^14.19.3"
+  }
+}
