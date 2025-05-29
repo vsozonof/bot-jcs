@@ -54,8 +54,7 @@ function loadPlayers() {
 }
 
 // save les modifs sur le json
-function savePlayers()
-{
+function savePlayers() {
 	fs.writeFileSync('players.json', JSON.stringify(teams, null, 2), 'utf-8');
 }
 
@@ -141,8 +140,23 @@ client.login(process.env.DISCORD_TOKEN);
 client.once('ready', async() => {
 	console.log(`The bot is online as ${client.user.tag}`);
 
-	updatePlayerData();
-	players.filter((x) => x.tier === "UNRANKED").sort(sortPlayers());
+	// updatePlayerData();
+	let cleanPlayers = []
+		// Changer et mettre les nom de team direct dans les data du player
+
+	for (const [teamName, players] of Object.entries(teams)) {
+		
+		console.log(players[2]);
+
+		// Sa me rends fou
+		// const sortedPlayers = cleanPlayers.filter((x) => x.stats && x.stats.tier !== "UNRANKED").sort(sortPlayers);
+
+		// console.log(sortedPlayers.length);
+
+		
+	}
+
+
 
 });
 
@@ -172,35 +186,35 @@ const RANK = {
 }
 
 
-function sortPlayers(playerA, playerB) {
+function sortPlayers(playerB, playerA) {
 
 
 	//Compare TIER
-	if (TIER[playerA.tier] < TIER[playerB.tier]) {
+	if (TIER[playerA.stats.tier] < TIER[playerB.stats.tier]) {
 		return 1;
-	} else if (TIER[playerA.tier] > TIER[playerB.tier]) {
+	} else if (TIER[playerA.stats.tier] > TIER[playerB.stats.tier]) {
 		return -1;
 	} else {
 		// Compare LP if Master/Grandmaster or Challenger
-		if (playerA.tier = "MASTER" || "GRANDMASTER" || "CHALLENGER" && playerB.tier === "MASTER" || "GRANDMASTER" || "CHALLENGER") {
-			if (playerA.lp < playerB.lp) {
+		if (playerA.stats.tier === "MASTER" || "GRANDMASTER" || "CHALLENGER" && playerB.stats.tier === "MASTER" || "GRANDMASTER" || "CHALLENGER") {
+			if (playerA.stats.lp < playerB.stats.lp) {
 				return 1;
-			} else if (playerA.lp > playerB.lp) {
+			} else if (playerA.stats.lp > playerB.stats.lp) {
 				return -1;
 			} else {
 				return 0
 			}
 		}
 		// Compare RANK if TIER equal
-		if (RANK[playerA.rank] < RANK[playerB.rank]) {
-			return playerB;
-		} else if (RANK[playerA.rank] > RANK[playerB.rank]) {
+		if (RANK[playerA.stats.rank] < RANK[playerB.stats.rank]) {
+			return 1;
+		} else if (RANK[playerA.stats.rank] > RANK[playerB.stats.rank]) {
 			return -1;
 		} else {
 			// Compare LP if TIER equal
-			if (playerA.lp < playerB.lp) {
+			if (playerA.stats.lp < playerB.stats.lp) {
 				return 1;
-			} else if (playerA.lp > playerB.lp) {
+			} else if (playerA.stats.lp > playerB.stats.lp) {
 				return -1;
 			} else {
 				return 0

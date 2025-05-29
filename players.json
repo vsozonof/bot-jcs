@@ -98,10 +98,11 @@
       "username": "Fley",
       "puuid": "ya1mgWEfIbdIBopW1J9prkIxcSISm4eEMX6xkrKedqRlMwyido7EdltAiXSYmyzpbGS2NGKN9Ao6hg",
       "stats": {
-        "tier": "UNRANKED",
-        "rank": "",
-        "wins": 0,
-        "losses": 0
+        "tier": "SILVER",
+        "rank": "I",
+        "wins": 4,
+        "losses": 1,
+        "lp": 51
       }
     },
     {
@@ -175,8 +176,8 @@
       "stats": {
         "tier": "GOLD",
         "rank": "III",
-        "lp": 3,
-        "wins": 8,
+        "lp": 41,
+        "wins": 9,
         "losses": 1
       }
     },
@@ -248,9 +249,9 @@
       "puuid": "sLIyON8mKlRvz_VftQ-WqUseayHpQd5XJDSjMsEAQSa9BVx8c65UYJLjYU-9UUXIrWejIBBGQUyLuw",
       "stats": {
         "tier": "SILVER",
-        "rank": "II",
-        "lp": 85,
-        "wins": 3,
+        "rank": "I",
+        "lp": 23,
+        "wins": 4,
         "losses": 3
       }
     },
