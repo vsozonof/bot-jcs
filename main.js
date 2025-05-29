@@ -142,6 +142,7 @@ client.once('ready', async() => {
 	console.log(`The bot is online as ${client.user.tag}`);
 
 	updatePlayerData();
+	players.filter((x) => x.tier === "UNRANKED").sort(sortPlayers());
 
 });
 
@@ -150,7 +151,7 @@ client.once('ready', async() => {
 //         SORT PLAYERS
 // ______________________________
 
-const RANK = {
+const TIER = {
 	"IRON": 0,
 	"BRONZE": 1,
 	"SILVER": 2,
@@ -163,7 +164,7 @@ const RANK = {
 	"CHALLENGER": 9,
 }
 
-const TIER = {
+const RANK = {
 	"IV": 0,
 	"III": 1,
 	"II": 2,
@@ -174,14 +175,14 @@ const TIER = {
 function sortPlayers(playerA, playerB) {
 
 
-	//Compare RANK
-	if (RANK[playerA.rank] < RANK[playerB.rank]) {
+	//Compare TIER
+	if (TIER[playerA.tier] < TIER[playerB.tier]) {
 		return 1;
-	} else if (RANK[playerA.rank] > RANK[playerB.rank]) {
+	} else if (TIER[playerA.tier] > TIER[playerB.tier]) {
 		return -1;
 	} else {
 		// Compare LP if Master/Grandmaster or Challenger
-		if (playerA.rank = "MASTER" || "GRANDMASTER" || "CHALLENGER" && playerB.rank === "MASTER" || "GRANDMASTER" || "CHALLENGER") {
+		if (playerA.tier = "MASTER" || "GRANDMASTER" || "CHALLENGER" && playerB.tier === "MASTER" || "GRANDMASTER" || "CHALLENGER") {
 			if (playerA.lp < playerB.lp) {
 				return 1;
 			} else if (playerA.lp > playerB.lp) {
@@ -190,10 +191,10 @@ function sortPlayers(playerA, playerB) {
 				return 0
 			}
 		}
-		// Compare TIER if RANK equal
-		if (TIER[playerA.tier] < TIER[playerB.tier]) {
+		// Compare RANK if TIER equal
+		if (RANK[playerA.rank] < RANK[playerB.rank]) {
 			return playerB;
-		} else if (TIER[playerA.tier] > TIER[playerB.tier]) {
+		} else if (RANK[playerA.rank] > RANK[playerB.rank]) {
 			return -1;
 		} else {
 			// Compare LP if TIER equal
