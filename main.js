@@ -49,7 +49,7 @@ function loadPlayers() {
 		return JSON.parse(fs.readFileSync('players.json', 'utf-8'));
 	} catch (error) {
 		console.error('Error loading players:', error);
-		return {};
+		return null;
 	}
 }
 
@@ -145,3 +145,65 @@ client.once('ready', async() => {
 
 });
 
+
+// ______________________________
+//         SORT PLAYERS
+// ______________________________
+
+const RANK = {
+	"IRON": 0,
+	"BRONZE": 1,
+	"SILVER": 2,
+	"GOLD": 3,
+	"PLATINUM": 4,
+	"EMERALD": 5,
+	"DIAMOND": 6,
+	"MASTER": 7,
+	"GRANDMASTER": 8,
+	"CHALLENGER": 9,
+}
+
+const TIER = {
+	"IV": 0,
+	"III": 1,
+	"II": 2,
+	"I": 3,
+}
+
+
+function sortPlayers(playerA, playerB) {
+
+
+	//Compare RANK
+	if (RANK[playerA.rank] < RANK[playerB.rank]) {
+		return 1;
+	} else if (RANK[playerA.rank] > RANK[playerB.rank]) {
+		return -1;
+	} else {
+		// Compare LP if Master/Grandmaster or Challenger
+		if (playerA.rank = "MASTER" || "GRANDMASTER" || "CHALLENGER" && playerB.rank === "MASTER" || "GRANDMASTER" || "CHALLENGER") {
+			if (playerA.lp < playerB.lp) {
+				return 1;
+			} else if (playerA.lp > playerB.lp) {
+				return -1;
+			} else {
+				return 0
+			}
+		}
+		// Compare TIER if RANK equal
+		if (TIER[playerA.tier] < TIER[playerB.tier]) {
+			return playerB;
+		} else if (TIER[playerA.tier] > TIER[playerB.tier]) {
+			return -1;
+		} else {
+			// Compare LP if TIER equal
+			if (playerA.lp < playerB.lp) {
+				return 1;
+			} else if (playerA.lp > playerB.lp) {
+				return -1;
+			} else {
+				return 0
+			}
+		}
+	}
+}
