@@ -6,7 +6,7 @@
 /*   By: vsozonof <vsozonof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 21:44:50 by vsozonof          #+#    #+#             */
-/*   Updated: 2025/05/29 18:29:03 by vsozonof         ###   ########.fr       */
+/*   Updated: 2025/05/29 19:34:22 by vsozonof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ function savePlayers()
 
 // utils pour faire les call API
 const RIOT_API_KEY = process.env.API_KEY;
-const REGION = 'europe';
+const REGION = 'euw1';
 
 // sleep maison pour limiter les call API
 // limites API: 20/s - 200/mins
@@ -92,16 +92,46 @@ async function getPuuid(summonerName, tagLine) {
 }
 
 async function updatePlayerData() {
-	try {
+	for (const [teamName, players] of Object.entries(teams)) {
+		console.log(`Fetching PUUIDs and stats for team: ${teamName}`);
 
-		const response = await axios.get(
-						`https://${REGION}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${encodeURIComponent(summonerName)}/${encodeURIComponent(tagLine)}`,
-			{
-				headers: { "X-Riot-Token": RIOT_API_KEY}
-			}	
-		);
+		for (const player of players) {
+			try {
+				const puuid = player.puuid;
+				const response = await axios.get(
+					`https://${REGION}.api.riotgames.com/lol/league/v4/entries/by-puuid/${puuid}`,
+					{
+						headers: { "X-Riot-Token": RIOT_API_KEY }
+					}
+				);
+
+				const soloQEntry = response.data.find(entry => entry.queueType === "RANKED_SOLO_5x5");
+
+				if (!player.stats)
+					player.stats = {};
+
+				if (soloQEntry) {
+					player.stats.tier = soloQEntry.tier;
+					player.stats.rank = soloQEntry.rank;
+					player.stats.lp = soloQEntry.leaguePoints;
+					player.stats.wins = soloQEntry.wins;
+					player.stats.losses = soloQEntry.losses;
+				} else {
+					player.stats.tier = "UNRANKED";
+					player.stats.rank = "";
+					player.stats.wins = 0;
+					player.stats.losses = 0;
+				}
+
+			savePlayers(); 
+			} catch (error) {
+				console.error(`Failed to fetch data for player ${player.name || player.puuid}:`, error.message);
+			}
+			await sleep(500);
+		}
 	}
 }
+
 
 
 // connecte le bot
@@ -111,16 +141,7 @@ client.login(process.env.DISCORD_TOKEN);
 client.once('ready', async() => {
 	console.log(`The bot is online as ${client.user.tag}`);
 
-	for (const [teamName, players] of Object.entries(teams)) {
-		console.log("Fetching PUUID of team ", teamName);
-		for (const player of players) {
-			const puuid = await getPuuid(player.summonerName, player.tagLine);
-			player.puuid = puuid;
-			console.log("Assigning PUUID: ", puuid, " to: ", player.summonerName);
-			savePlayers();
-			await sleep(500);
-		}
-	}
+	updatePlayerData();
 
 });
 
