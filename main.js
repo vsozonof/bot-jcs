@@ -1,143 +1,126 @@
-//Insert your ApiKey here
-const apiKey = "RGAPI-f2a7352f-ffbe-49f2-850c-50522184babb";
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.js                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vsozonof <vsozonof@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/23 21:44:50 by vsozonof          #+#    #+#             */
+/*   Updated: 2025/05/29 18:29:03 by vsozonof         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-const button = document.querySelector(".buttonxdd");
-const inputDiv = document.querySelector("input");
+const fs = require('fs');
 
+// cron job -> automatiser l'envois des messages
+const cron = require('node-cron');
 
-// List of all of the players to be integrated
-const timer = ms => new Promise(res => setTimeout(res, ms));
+// axios -> permets de faire nos requêtes API
+const axios = require('axios');
 
-let singularSummData = {};
-let summonerData = [];
-let singularQueueDataSummoner = [];
-let queueDataSummoner = [];
+// utils pour utiliser l'api dc et le bot
+// -> client: pour pouvoir contrôler le bot
+// -> GatewayIntentBits: octroyer des "droits" au bot
+const { Client,
+		GatewayIntentBits } = require('discord.js');
 
+// droits du client (sur l'api discord)
+const client = new Client({ intents: [
+	GatewayIntentBits.Guilds,
+	GatewayIntentBits.GuildMembers,
+	GatewayIntentBits.MessageContent,
+	GatewayIntentBits.GuildMessages,
+	GatewayIntentBits.GuildVoiceStates]});
 
-function fileHandling(div) {
+// pour le .env
+// -> pour ne pas avoir de données sensibles dans le code
+require('dotenv').config();
 
-    //Promise to handle file processing otherwise I can't return the content of the JSON
-    return new Promise((resolve, reject) => {
+// ______________________________
+//             JSON
+// ______________________________
 
-        let file = div.files[0];
+// load le JSON sur teams
+let teams = loadPlayers();
 
+// load le json
+function loadPlayers() {
+	try {
+		return JSON.parse(fs.readFileSync('players.json', 'utf-8'));
+	} catch (error) {
+		console.error('Error loading players:', error);
+		return {};
+	}
+}
 
-        if (!file) {
-            reject(new Error("No file were inserted"));
-            return;
-        }
-
-        let reader  = new FileReader();
-        
-
-            reader.onload = function() {
-                // So I think the use of this try catch is incase there is any parsing Error
-                try {
-                    resolve(JSON.parse(reader.result))
-                } catch (error) {
-                    throw error
-                }
-            }
-            
-        // and this one is for when reading the JSON Itself
-        reader.onerror = function() {
-            throw reader.error;
-        }
-        
-        reader.readAsText(file);    
-    })
-
+// save les modifs sur le json
+function savePlayers()
+{
+	fs.writeFileSync('players.json', JSON.stringify(teams, null, 2), 'utf-8');
 }
 
 
+// ______________________________
+//		CALL API RITO GAMES
+// ______________________________
 
-async function fetchRiotAPI(url) {
+// utils pour faire les call API
+const RIOT_API_KEY = process.env.API_KEY;
+const REGION = 'europe';
 
-    try {
-            const response = await fetch(url)
-            if (!response.ok) {
-                throw new Error(`HTTP Request Error status:${response.status}`);
-            }
-            const data = await response.json();
-        
-            return data;
-        
-    } catch (error) {
-        console.log(error);
-        throw error;
-    }
-    
+// sleep maison pour limiter les call API
+// limites API: 20/s - 200/mins
+function sleep(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-//String constructor to send to the API in order to get the profile data of each player
-function constructProfileDataString(sumData) {
+// return le PUUID du riotID donné en params
+async function getPuuid(summonerName, tagLine) {
+		try {
+		const response = await axios.get(
+			`https://${REGION}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${encodeURIComponent(summonerName)}/${encodeURIComponent(tagLine)}`,
+			{
+				headers: { "X-Riot-Token": RIOT_API_KEY}
+			}
+		);
 
-    let arr = [];
-
-    for (let i = 0; i < sumData.length; i++) {
-        arr.push(`https://euw1.api.riotgames.com/lol/league/v4/entries/by-puuid/${sumData[i]}?api_key=${apiKey}`);
-    }
-
-    return arr;
-
+		return response.data.puuid;
+	} catch (error) {
+		console.log(`Error: `, error.response?.data || error.message);
+		return null;
+	}
 }
 
-//String constructor to send to the API in order to get the puuid of the players, needed in order to re-fetch for the profile data
-function constructPUUIDString(object) {
-    let arr = [];
+async function updatePlayerData() {
+	try {
 
-    for (let i = 0; i < object.length; i++) {
-        arr.push(`https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${object[i].name}/${object[i].tag}?api_key=${apiKey}`)
-    }
-
-    return arr;
-}
-
-async function getProfileDataforEachPlayer() {
-
-    const summonerList = await fileHandling(inputDiv);
-
-    let constructedString = constructPUUIDString(summonerList);
-
-    //Sending API request for each player (puuid)
-    for (let i = 0; i < summonerList.length; i++) {
-        singularSummData = await fetchRiotAPI(constructedString[i]);
-        summonerData.push(singularSummData.puuid);
-        await timer(200);
-    }
-
-    console.log(summonerData);
-    
-    constructedString = constructProfileDataString(summonerData)
-
-    //Sending API request for each player (profile data)
-    for (let i = 0; i < constructedString.length; i++) {
-        singularQueueDataSummoner = await fetchRiotAPI(constructedString[i]);
-        queueDataSummoner.push(singularQueueDataSummoner[0]);
-        await timer(200);
-    }
-    console.log(queueDataSummoner);
-
-    return queueDataSummoner;
-
+		const response = await axios.get(
+						`https://${REGION}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${encodeURIComponent(summonerName)}/${encodeURIComponent(tagLine)}`,
+			{
+				headers: { "X-Riot-Token": RIOT_API_KEY}
+			}	
+		);
+	}
 }
 
 
-button.addEventListener("click", async function() {
+// connecte le bot
+client.login(process.env.DISCORD_TOKEN);
 
-    //Prob add loading animations or smth
+// exec cette partie dès que le bot est "ready" -> en ligne
+client.once('ready', async() => {
+	console.log(`The bot is online as ${client.user.tag}`);
 
-    try {
+	for (const [teamName, players] of Object.entries(teams)) {
+		console.log("Fetching PUUID of team ", teamName);
+		for (const player of players) {
+			const puuid = await getPuuid(player.summonerName, player.tagLine);
+			player.puuid = puuid;
+			console.log("Assigning PUUID: ", puuid, " to: ", player.summonerName);
+			savePlayers();
+			await sleep(500);
+		}
+	}
 
-        const data = await getProfileDataforEachPlayer();
+});
 
-        console.log(data);
-
-    } catch (error) {
-
-        // add Error handling for the user, a popup or a message
-        console.log(error);
-        return null;
-    }
-
-})
