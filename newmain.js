@@ -12,8 +12,8 @@ const TIER = ["I", "II", "III", "IV", "V"];
 // List of all of the players to be integrated
 const timer = ms => new Promise(res => setTimeout(res, ms));
 
-let singularSummData = {};
 let summonerData = [];
+let constructedString = []
 let singularQueueDataSummoner = [];
 let queueDataSummoner = [];
 
@@ -53,8 +53,6 @@ function fileHandling(div) {
 
 }
 
-
-
 async function fetchRiotAPI(url) {
 
     try {
@@ -73,19 +71,6 @@ async function fetchRiotAPI(url) {
     
 }
 
-//String constructor to send to the API in order to get the profile data of each player
-function constructProfileDataString(sumData) {
-
-    let arr = [];
-
-    for (let i = 0; i < sumData.length; i++) {
-        arr.push(`https://euw1.api.riotgames.com/lol/league/v4/entries/by-puuid/${sumData[i].puuid}?api_key=${apiKey}`);
-    }
-
-    return arr;
-
-}
-
 //String constructor to send to the API in order to get the puuid of the players, needed in order to re-fetch for the profile data
 function constructPUUIDString(object) {
     let arr = [];
@@ -101,29 +86,24 @@ async function getProfileDataforEachPlayer() {
 
     const summonerData = await fileHandling(inputDiv);
 
-    // let constructedString = constructPUUIDString(summonerList);
+    // constructedString = constructProfileDataString(summonerData)
 
-    // //Sending API request for each player (puuid)
-    // for (let i = 0; i < summonerList.length; i++) {
-    //     singularSummData = await fetchRiotAPI(constructedString[i]);
-    //     summonerData.push(singularSummData.puuid);
-    //     await timer(200);
+    // //Sending API request for each player (profile data)
+    // for (let i = 0; i < constructedString.length; i++) {
+    //     singularQueueDataSummoner = await fetchRiotAPI(constructedString[i]);
+    //     if (singularQueueDataSummoner.length === 0) continue;
+    //     queueDataSummoner.push(singularQueueDataSummoner[0]);
+    //     await timer(60);
     // }
 
-    // console.log(summonerData);
-    // console.log(JSON.stringify(summonerData));
-    
-    constructedString = constructProfileDataString(summonerData)
+    // console.log(JSON.stringify(queueDataSummoner));
 
-    //Sending API request for each player (profile data)
-    for (let i = 0; i < constructedString.length; i++) {
-        singularQueueDataSummoner = await fetchRiotAPI(constructedString[i]);
-        if (singularQueueDataSummoner.length === 0) continue;
-        queueDataSummoner.push(singularQueueDataSummoner[0]);
-        await timer(60);
-    }
+    // for (let i = 0; i < summonerData.length; i++) {
+    //     summonerData[i].
+        
+    // }
 
-    console.log(JSON.stringify(queueDataSummoner));
+    console.log(summonerData);
 
     // return queueDataSummoner;
 
