@@ -14,10 +14,17 @@
       }
     },
     {
-      "summonerName": "Undvmosril",
-      "tagLine": "8305",
+      "summonerName": "JCS JGLKING",
+      "tagLine": "Spy",
       "username": "Spyrof",
-      "puuid": null
+      "puuid": "Xj1wf91nr98dUcBB9BXjvXghXdNLyMwOmRsZS8zxefhuZlPhNBjnm54toCF5eWWm24XEo1bP-oNJeA",
+      "stats": {
+        "tier": "GOLD",
+        "rank": "III",
+        "lp": 80,
+        "wins": 10,
+        "losses": 1
+      }
     },
     {
       "summonerName": "Moiddshy",
@@ -37,11 +44,11 @@
       "username": "Jawa",
       "puuid": "g0PQJ0TNbUaw0bfygnFjsB5nAjXzVXFDiFQTE_8WGyXU-nyJYeEmfWNK04R4F7Sjm90tk4qXhTzv_g",
       "stats": {
-        "tier": "GOLD",
-        "rank": "III",
-        "lp": 41,
-        "wins": 9,
-        "losses": 1
+        "tier": "PLATINUM",
+        "rank": "IV",
+        "lp": 71,
+        "wins": 18,
+        "losses": 2
       }
     },
     {
@@ -50,10 +57,11 @@
       "username": "Eikoz",
       "puuid": "M2fi86MfkozDyuT1HLJa2WRDWgWEQRp3DhspWTtPIMWgBzbCZXEjP03TuUnYj88-fyh_T6Sf2GbXMw",
       "stats": {
-        "tier": "UNRANKED",
-        "rank": "",
-        "wins": 0,
-        "losses": 0
+        "tier": "SILVER",
+        "rank": "I",
+        "wins": 4,
+        "losses": 3,
+        "lp": 23
       }
     },
     {
@@ -86,10 +94,11 @@
       "username": "Yuno",
       "puuid": "W0BWbqWkQcNLTznlytb0owlcEnbm5mYwflNqvlXbVkCV_rr6x2kzKiaqPsj4uasST0aUSUXmvBki_Q",
       "stats": {
-        "tier": "UNRANKED",
-        "rank": "",
-        "wins": 0,
-        "losses": 0
+        "tier": "SILVER",
+        "rank": "I",
+        "wins": 5,
+        "losses": 1,
+        "lp": 89
       }
     },
     {
@@ -106,15 +115,16 @@
       }
     },
     {
-      "summonerName": "Urncaughshy",
-      "tagLine": "3789",
+      "summonerName": "Moonlight Sonata",
+      "tagLine": "EVA",
       "username": "Goxyd",
       "puuid": "6sDwWbJ1cHMURg0kOLsQw0rX4OIJax6eKreDqPMwmSimXX49bRLJF4sSr0-iCKbSWPwvDCt0So950w",
       "stats": {
-        "tier": "UNRANKED",
-        "rank": "",
-        "wins": 0,
-        "losses": 0
+        "tier": "SILVER",
+        "rank": "I",
+        "wins": 4,
+        "losses": 1,
+        "lp": 31
       }
     },
     {
@@ -123,10 +133,11 @@
       "username": "Konno",
       "puuid": "ACceuqKdImBVsT4K2H3cgd4xUDGIF78XhyvvNwWsgky6P_Q7qyWpXVaujIncJ72rsNA0KxVqsqqrVA",
       "stats": {
-        "tier": "UNRANKED",
-        "rank": "",
-        "wins": 0,
-        "losses": 0
+        "tier": "SILVER",
+        "rank": "I",
+        "wins": 4,
+        "losses": 2,
+        "lp": 30
       }
     },
     {
@@ -135,11 +146,11 @@
       "username": "Red",
       "puuid": "Udu16MwvNCKmvDhxv3fGkJmbJIoDp9e6dE64ROwSroHzt2gQq6YFJCa8QRMJr_CaDqyJIdHA2cJE5Q",
       "stats": {
-        "tier": "SILVER",
-        "rank": "I",
-        "lp": 65,
-        "wins": 5,
-        "losses": 3
+        "tier": "GOLD",
+        "rank": "III",
+        "lp": 2,
+        "wins": 9,
+        "losses": 5
       }
     }
   ],
@@ -162,10 +173,11 @@
       "username": "Drattix",
       "puuid": "X6gwDAAXeJAd0pkSNEPmcSFbDg0kGJi4ZpsX1kU59RrrdpKr7ppj4F_jpYSD6dJApcKvDbGPBlyjDQ",
       "stats": {
-        "tier": "UNRANKED",
-        "rank": "",
-        "wins": 0,
-        "losses": 0
+        "tier": "GOLD",
+        "rank": "III",
+        "wins": 8,
+        "losses": 1,
+        "lp": 3
       }
     },
     {
@@ -175,10 +187,10 @@
       "puuid": "1F2jCoJh81khg5-jMhtoZN86-gafz1YI-O9nphLsjAzyP0YxOlR8pEyl6V095_ypbq0bzdHx8LqbuQ",
       "stats": {
         "tier": "GOLD",
-        "rank": "III",
-        "lp": 41,
-        "wins": 9,
-        "losses": 1
+        "rank": "I",
+        "lp": 95,
+        "wins": 16,
+        "losses": 2
       }
     },
     {
@@ -187,10 +199,11 @@
       "username": "Kiks",
       "puuid": "Ghusri3OZFwX0zHuxlybKx5INnOowrDHFJP-jfkgcC8QRDolD8tBbhG3IjRnzLHpyhGItpigHPvrTw",
       "stats": {
-        "tier": "UNRANKED",
-        "rank": "",
-        "wins": 0,
-        "losses": 0
+        "tier": "SILVER",
+        "rank": "II",
+        "wins": 3,
+        "losses": 4,
+        "lp": 55
       }
     },
     {
@@ -211,10 +224,11 @@
       "username": "GHT",
       "puuid": "eve_Y_PY-4zwolsIgzPA2Cos_DL81bQQWjYjFtyVIducqT55uC5Phd6L3Ly7gHai56fTOtDh1EYQyA",
       "stats": {
-        "tier": "UNRANKED",
-        "rank": "",
-        "wins": 0,
-        "losses": 0
+        "tier": "GOLD",
+        "rank": "IV",
+        "wins": 7,
+        "losses": 1,
+        "lp": 66
       }
     },
     {
@@ -236,9 +250,9 @@
       "puuid": "Mk1pW_8ZObz4FNvN4p22fbHD3PXIvcpAb5xD_m0t_7E3dcrtr9ekp-ftxhTgWnC6N8eVgm5qU6XE4w",
       "stats": {
         "tier": "SILVER",
-        "rank": "II",
-        "lp": 40,
-        "wins": 2,
+        "rank": "I",
+        "lp": 16,
+        "wins": 4,
         "losses": 3
       }
     },
@@ -248,11 +262,11 @@
       "username": "Siweth",
       "puuid": "sLIyON8mKlRvz_VftQ-WqUseayHpQd5XJDSjMsEAQSa9BVx8c65UYJLjYU-9UUXIrWejIBBGQUyLuw",
       "stats": {
-        "tier": "SILVER",
-        "rank": "I",
-        "lp": 23,
-        "wins": 4,
-        "losses": 3
+        "tier": "GOLD",
+        "rank": "IV",
+        "lp": 41,
+        "wins": 9,
+        "losses": 9
       }
     },
     {
@@ -305,10 +319,11 @@
       "username": "Tak",
       "puuid": "JG3ZwcWB1g66KGaICQsBdz9c4-ShjtG_j7iI9xdW5TVai8TW8VeM1T_jN9URSN65uJAb8rXWnPzrFw",
       "stats": {
-        "tier": "UNRANKED",
-        "rank": "",
-        "wins": 0,
-        "losses": 0
+        "tier": "GOLD",
+        "rank": "II",
+        "wins": 11,
+        "losses": 2,
+        "lp": 16
       }
     },
     {
@@ -319,9 +334,9 @@
       "stats": {
         "tier": "GOLD",
         "rank": "IV",
-        "lp": 2,
-        "wins": 5,
-        "losses": 0
+        "lp": 73,
+        "wins": 7,
+        "losses": 1
       }
     },
     {
@@ -342,10 +357,11 @@
       "username": "Cyrenos",
       "puuid": "c1yXM1DfZ8E-OR87MhwKxoeePCpyWhaIzUonKrOrGnXsXgXQ3p27aFhgqbm1zsL3N6KVaZYRzlf6bQ",
       "stats": {
-        "tier": "UNRANKED",
-        "rank": "",
-        "wins": 0,
-        "losses": 0
+        "tier": "GOLD",
+        "rank": "III",
+        "wins": 10,
+        "losses": 2,
+        "lp": 63
       }
     },
     {
@@ -354,10 +370,11 @@
       "username": "MPB",
       "puuid": "GlMpFInTxwUE_GVWJsqyx5lcFudowpE5dYmSaHS8Tg28UuS2_wvhea-wjhWB1qDAfE-HfkocpUZlaQ",
       "stats": {
-        "tier": "UNRANKED",
-        "rank": "",
-        "wins": 0,
-        "losses": 0
+        "tier": "SILVER",
+        "rank": "II",
+        "wins": 3,
+        "losses": 4,
+        "lp": 73
       }
     },
     {
@@ -366,10 +383,11 @@
       "username": "Karma",
       "puuid": "aeqaxWtxAf2czp456OXzgTkTzIsIfCcki46moiMNJYoQmhZsSLsmYZ7Wh8jAegbRtCO4twrL8npDig",
       "stats": {
-        "tier": "UNRANKED",
-        "rank": "",
-        "wins": 0,
-        "losses": 0
+        "tier": "GOLD",
+        "rank": "II",
+        "wins": 12,
+        "losses": 3,
+        "lp": 32
       }
     },
     {
@@ -379,10 +397,10 @@
       "puuid": "4dnaAuPOnv8Gcd0ctTCpcWra07s5WNV-j6p-1ZYci2eAP6fiPum10jtnhnupezrTovxzWCIAskNVnw",
       "stats": {
         "tier": "GOLD",
-        "rank": "IV",
-        "lp": 27,
-        "wins": 6,
-        "losses": 1
+        "rank": "III",
+        "lp": 93,
+        "wins": 11,
+        "losses": 3
       }
     },
     {
@@ -404,10 +422,10 @@
       "puuid": "jcLSP96wW9fWfZ88Jzx2sNmhu6DLZ7z_CbfjMuluKFqJAsDC_FMpBTZHttLvqmkRb5MwiSPfd7kJCA",
       "stats": {
         "tier": "SILVER",
-        "rank": "II",
-        "lp": 97,
-        "wins": 3,
-        "losses": 2
+        "rank": "I",
+        "lp": 49,
+        "wins": 5,
+        "losses": 4
       }
     },
     {
@@ -416,10 +434,11 @@
       "username": "Porokami",
       "puuid": "i0IMTpBtCqtneZGOYSp3oobxSMWRtXNzJw4u2DZPyIcR7vfyHmD1XPOS0d_--hLFyR7Olc8QxoZXww",
       "stats": {
-        "tier": "UNRANKED",
-        "rank": "",
-        "wins": 0,
-        "losses": 0
+        "tier": "SILVER",
+        "rank": "II",
+        "wins": 3,
+        "losses": 2,
+        "lp": 97
       }
     },
     {
@@ -432,9 +451,16 @@
   "Team Mathias": [
     {
       "summonerName": "Tak ad acc",
-      "tagLine": "1LDC",
+      "tagLine": "1 LDC",
       "username": "Mani",
-      "puuid": null
+      "puuid": "F6woZCChDPH92tBA_ltj8UYHSFzVyb-Kkd19kOyhNRjm3f-du9E3QqJRH9N1BdiHkygeZ13Hz8P-cg",
+      "stats": {
+        "tier": "SILVER",
+        "rank": "II",
+        "lp": 78,
+        "wins": 3,
+        "losses": 3
+      }
     },
     {
       "summonerName": "Heartsteel Alune",
@@ -442,11 +468,11 @@
       "username": "Yannis",
       "puuid": "5QGZ_siUtVGENPTP9YoRXgwqqTAKlfzZVik8I8NXaQEDopVsgOc50wZY-kZkDXXVjDpA5okFIwZ-BQ",
       "stats": {
-        "tier": "SILVER",
-        "rank": "II",
-        "lp": 97,
-        "wins": 3,
-        "losses": 2
+        "tier": "GOLD",
+        "rank": "III",
+        "lp": 39,
+        "wins": 10,
+        "losses": 4
       }
     },
     {
@@ -455,10 +481,11 @@
       "username": "Jojopello",
       "puuid": "kc1MKPU-mfTPKvqfzxkh7sFFSC2t90PV3aWqrECQw8tIV--f1bAejA5FQ496cjvJan23WPgGR-xU8w",
       "stats": {
-        "tier": "UNRANKED",
-        "rank": "",
-        "wins": 0,
-        "losses": 0
+        "tier": "GOLD",
+        "rank": "IV",
+        "wins": 9,
+        "losses": 5,
+        "lp": 93
       }
     },
     {
@@ -479,10 +506,11 @@
       "username": "Kyrin",
       "puuid": "dTDtVz4_Jl-uY7TX6N3ICVuxkzG1vBYFcZ19rabYkGbrzNhfb40sTD4rJkQmGXNSZk2L2ihI3MtmTg",
       "stats": {
-        "tier": "UNRANKED",
-        "rank": "",
-        "wins": 0,
-        "losses": 0
+        "tier": "SILVER",
+        "rank": "II",
+        "wins": 3,
+        "losses": 2,
+        "lp": 97
       }
     },
     {
@@ -527,14 +555,15 @@
       "username": "Nesrok",
       "puuid": "sSxrkYBWuW3pT-GUEGApdsXgIiKQTzKiBT3d8xBMoVNq3zNcKjHaETy9IVw3QGhd-0Q_hv2f7LqHjA",
       "stats": {
-        "tier": "UNRANKED",
-        "rank": "",
-        "wins": 0,
-        "losses": 0
+        "tier": "SILVER",
+        "rank": "I",
+        "wins": 5,
+        "losses": 4,
+        "lp": 49
       }
     },
     {
-      "summonerName": "JOUR 1 SANS LOL ",
+      "summonerName": "JOUR 1 SANS LOL",
       "tagLine": "BIDET",
       "username": "Kojiro",
       "puuid": "q6Oo_-KJ82lKzioQa5QyCjJTb1iafbZ4ZK3JIvO49HJXcPf5OdK-j4DW-OBTeoRBLx7ClnfnB6NX6A",
@@ -546,23 +575,30 @@
       }
     },
     {
-      "summonerName": "Emopughan",
-      "tagLine": "3211",
+      "summonerName": "BOMBE NUCLÉAIRE",
+      "tagLine": "NUKE",
       "username": "Iench",
       "puuid": "AOzcv-ZZmGuSZCENjnsoo7yitgma0XqAUEGiQAPDXem2Etpyfi6guvl1tw1kkPD3Dz89vqC6ZikKcw",
       "stats": {
         "tier": "GOLD",
-        "rank": "IV",
-        "lp": 11,
-        "wins": 6,
+        "rank": "II",
+        "lp": 77,
+        "wins": 13,
         "losses": 2
       }
     },
     {
-      "summonerName": "Mathias",
-      "tagLine": "MISSING",
-      "username": "MISSING",
-      "puuid": null
+      "summonerName": "Yami Marik",
+      "tagLine": "RAT",
+      "username": "Mathias",
+      "puuid": "c7C0fHF0A6JB4BEPzvr9ozr_jQvHI_K19OKja2ct-fYujO5oafOp9p7dSH9wQuTzfStLc5zHBdDD_g",
+      "stats": {
+        "tier": "GOLD",
+        "rank": "III",
+        "lp": 3,
+        "wins": 8,
+        "losses": 1
+      }
     }
   ]
 }

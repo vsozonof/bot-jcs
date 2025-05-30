@@ -65,7 +65,7 @@ function savePlayers() {
 
 // utils pour faire les call API
 const RIOT_API_KEY = process.env.API_KEY;
-const REGION = 'euw1';
+const REGION = 'americas';
 
 // sleep maison pour limiter les call API
 // limites API: 20/s - 200/mins
@@ -75,6 +75,7 @@ function sleep(ms) {
 
 // return le PUUID du riotID donné en params
 async function getPuuid(summonerName, tagLine) {
+	console.log(summonerName, tagLine);
 		try {
 		const response = await axios.get(
 			`https://${REGION}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${encodeURIComponent(summonerName)}/${encodeURIComponent(tagLine)}`,
@@ -86,6 +87,7 @@ async function getPuuid(summonerName, tagLine) {
 		return response.data.puuid;
 	} catch (error) {
 		console.log(`Error: `, error.response?.data || error.message);
+		console.log(error.response.data);
 		return null;
 	}
 }
@@ -103,7 +105,6 @@ async function updatePlayerData() {
 						headers: { "X-Riot-Token": RIOT_API_KEY }
 					}
 				);
-
 				const soloQEntry = response.data.find(entry => entry.queueType === "RANKED_SOLO_5x5");
 
 				if (!player.stats)
@@ -124,7 +125,7 @@ async function updatePlayerData() {
 
 			savePlayers(); 
 			} catch (error) {
-				console.error(`Failed to fetch data for player ${player.name || player.puuid}:`, error.message);
+				console.error(`Failed to fetch data for player ${player.username}:`, error.message);
 			}
 			await sleep(500);
 		}
@@ -140,24 +141,31 @@ client.login(process.env.DISCORD_TOKEN);
 client.once('ready', async() => {
 	console.log(`The bot is online as ${client.user.tag}`);
 
-	// updatePlayerData();
-	let cleanPlayers = []
-		// Changer et mettre les nom de team direct dans les data du player
+
+	savePlayers()
+
+
+	// await updatePlayerData();
+	let listOfAllPlayers = []
+	let ListOfAllTeamsPlayers = [];
 
 	for (const [teamName, players] of Object.entries(teams)) {
-		
-		console.log(players[2]);
-
-		// Sa me rends fou
-		// const sortedPlayers = cleanPlayers.filter((x) => x.stats && x.stats.tier !== "UNRANKED").sort(sortPlayers);
-
-		// console.log(sortedPlayers.length);
-
-		
+		for (let i = 0; i < players.length; i++) {
+			listOfAllPlayers.push(players[i])
+		}
+		// Array [0] = TeamGoxyd, Array[1] = TeamDrattix ect... Array [3] = TeamMathias
+		ListOfAllTeamsPlayers.push(players)
 	}
 
 
+	// Filtering all of the UNRANKED, then SORTING all of them in Highest elo (index 0), to Lowest
+	const sortedListOfAllPlayers = listOfAllPlayers.filter((x) => x.stats && x.stats.tier !== "UNRANKED").sort(sortPlayers);
 
+	//Recupéré l'élo moyen de chaque équipe (la par ex que goxyd donc une for loop pour tout recup ou je peut même intégré direct
+	//  dans la fonction de le faire dès qu'on call la fonction average et sa retourne un array of object)
+	let AverageEloGoxyd = calculateAverageRank(ListOfAllTeamsPlayers[0]);
+
+	
 });
 
 
@@ -165,29 +173,30 @@ client.once('ready', async() => {
 //         SORT PLAYERS
 // ______________________________
 
-const TIER = {
-	"IRON": 0,
-	"BRONZE": 1,
-	"SILVER": 2,
-	"GOLD": 3,
-	"PLATINUM": 4,
-	"EMERALD": 5,
-	"DIAMOND": 6,
-	"MASTER": 7,
-	"GRANDMASTER": 8,
-	"CHALLENGER": 9,
-}
-
-const RANK = {
-	"IV": 0,
-	"III": 1,
-	"II": 2,
-	"I": 3,
-}
 
 
-function sortPlayers(playerB, playerA) {
+function sortPlayers(playerA, playerB) {
 
+	const TIER = {
+		"IRON": 0,
+		"BRONZE": 1,
+		"SILVER": 2,
+		"GOLD": 3,
+		"PLATINUM": 4,
+		"EMERALD": 5,
+		"DIAMOND": 6,
+		"MASTER": 7,
+		"GRANDMASTER": 8,
+		"CHALLENGER": 9,
+	}
+	
+	const RANK = {
+		"IV": 0,
+		"III": 1,
+		"II": 2,
+		"I": 3,
+	}
+	
 
 	//Compare TIER
 	if (TIER[playerA.stats.tier] < TIER[playerB.stats.tier]) {
@@ -196,7 +205,8 @@ function sortPlayers(playerB, playerA) {
 		return -1;
 	} else {
 		// Compare LP if Master/Grandmaster or Challenger
-		if (playerA.stats.tier === "MASTER" || "GRANDMASTER" || "CHALLENGER" && playerB.stats.tier === "MASTER" || "GRANDMASTER" || "CHALLENGER") {
+		if ((playerA.stats.tier === "MASTER" || playerA.stats.tier === "GRANDMASTER" || playerA.stats.tier === "CHALLENGER") 
+			&& (playerB.stats.tier === "MASTER" || playerB.stats.tier === "GRANDMASTER" || playerB.stats.tier === "CHALLENGER")) {
 			if (playerA.stats.lp < playerB.stats.lp) {
 				return 1;
 			} else if (playerA.stats.lp > playerB.stats.lp) {
@@ -220,5 +230,81 @@ function sortPlayers(playerB, playerA) {
 				return 0
 			}
 		}
+	}
+}
+
+// A function that calculate the average of all the elo contained in an array
+function calculateAverageRank(targetArray) {
+
+	let pointsArrayPlayer = [];
+
+    const tierBasePoints = {
+        "IRON": 0,
+        "BRONZE": 400,  // Iron IV-I = 400 LP
+        "SILVER": 800,  // Bronze IV-I = 400 LP
+        "GOLD": 1200,   // Silver IV-I = 400 LP
+        "PLATINUM": 1600, // Gold IV-I = 400 LP
+        "EMERALD": 2000, // Platinum IV-I = 400 LP
+        "DIAMOND": 2400,  // Emerald IV-I = 400 LP
+        "MASTER": 2800,   // Diamond IV-I = 400 LP
+        "GRANDMASTER": 3200, // Assuming Master tier spans ~400-500 LP before GM (this is an approximation)
+        "CHALLENGER": 3700   // Assuming GM tier spans ~400-500 LP before Challenger (approximation)
+    };
+
+    // Points for each division within a tier (Iron to Diamond)
+    const rankDivisionPoints = {
+        "IV": 0,
+        "III": 100,
+        "II": 200,
+        "I": 300
+    };
+
+	for (let i = 0; i < targetArray.length; i++) {
+		// Filtering UNRANKED player just incase
+		if (targetArray[i].stats.tier === "UNRANKED") {
+			continue;
+		}
+		// Verif pour Master/GM/Chall
+		if (rankDivisionPoints[targetArray[i].stats.rank]) {
+			pointsArrayPlayer.push(tierBasePoints[targetArray[i].stats.tier] + rankDivisionPoints[targetArray[i].stats.rank] + targetArray[i].stats.lp);
+		} else {
+			pointsArrayPlayer.push(tierBasePoints[targetArray[i].stats.tier] + targetArray[i].stats.lp);
+		}
+	}
+
+	const sumPoint = pointsArrayPlayer.reduce((iterator, currentValue) => iterator + currentValue, 0);
+	const pointsAverage = Math.round(sumPoint / pointsArrayPlayer.length);
+
+	return getRankFromPoints(pointsAverage);
+
+	function getRankFromPoints(points) {
+		let ELO = {};
+
+		// Keeping the previous rank to get it when found
+		let previousTier = "";
+		// Looping through tier and removing the point of the tier
+		for (let [tierName, tierPointValue] of Object.entries(tierBasePoints)) {
+			if (points < tierPointValue) {
+				ELO.tier = previousTier;
+				points -= tierBasePoints[previousTier];
+				break;
+			}
+			previousTier = tierName;
+		}
+
+		let previousRank = "";
+		// Looping through rank and removing the point of the rank
+		for (let [tierName, tierPointValue] of Object.entries(rankDivisionPoints)) {
+			if (points < tierPointValue) {
+				ELO.rank = previousRank;
+				points -= rankDivisionPoints[previousRank];
+				break;
+			}
+			previousRank = tierName;
+		}
+
+		// points restant = LP
+		ELO.lp = points;
+		return ELO;
 	}
 }
